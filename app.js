@@ -5,8 +5,7 @@ const app = express();
 
 mongoose
   .connect(
-    `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@${process.env.DB_URL}`,
-    { useNewUrlParser: true, useUnifiedTopology: true }
+    `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@${process.env.DB_URL}`
   )
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
@@ -20,7 +19,7 @@ app.post("/api/books", (req, res, next) => {
   });
 });
 
-app.get((req, res, next) => {
+app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
@@ -33,27 +32,10 @@ app.get((req, res, next) => {
   next();
 });
 
-app.use("/api/books", (req, res, next) => {
-  const books = [
-    {
-      userId: "oeihfzeoi",
-      title: "Mon premier objet",
-      author: "ATEF",
-      imageUrl:
-        "https://cdn.pixabay.com/photo/2019/06/11/18/56/camera-4267692_1280.jpg",
-      year: 4900,
-      genre: "Fantasie",
-      genre: "String - genre du livre",
-      ratings: [
-        {
-          userId: "mongoId",
-          grade: 4,
-        },
-      ],
-      averageRating: 3,
-    },
-  ];
-  res.status(200).json(books);
-});
+// app.get("/api/books", (req, res, next) => {
+//   Book.find()
+//     .then((books) => res.status(200).json(books))
+//     .catch((error) => res.status(400).json({ error }));
+// });
 
 module.exports = app;
