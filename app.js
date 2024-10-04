@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const app = express();
 
 const bookRoutes = require("./routes/book");
+const userRoutes = require("./routes/user");
+
 mongoose
   .connect(
     `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@${process.env.DB_URL}`
@@ -13,6 +15,7 @@ mongoose
 
 app.use(express.json()); // Middleware permettant d'avoir acces au body de la requete
 
+//CORS management
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -26,8 +29,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use(bodyParser.json());
-
 app.use("/api/books", bookRoutes);
+app.use("/api/auth", userRoutes);
 
 module.exports = app;
