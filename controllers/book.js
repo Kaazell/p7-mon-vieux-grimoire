@@ -108,7 +108,7 @@ exports.rateBook = (req, res, next) => {
           }
           const updateAverageRating = calcAverageRating(updatedRatings);
           Book.findOneAndUpdate(
-            { _id: req.params.id, "ratings.userId": { $ne: user } },
+            { _id: req.params.id, "ratings.userId": { $ne: user } }, //Verifier que le user n'a pas deja noté ce livre
             {
               $push: { ratings: newRating },
               averageRating: updateAverageRating,
