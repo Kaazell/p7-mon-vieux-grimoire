@@ -3,8 +3,8 @@ const fs = require("fs");
 
 exports.createBook = (req, res, next) => {
   const bookObject = JSON.parse(req.body.book);
-  delete bookObject._id;
-  delete bookObject._userId;
+  delete bookObject._id; // Cote MongoDB / Si un utilisateur soumettait une requête avec un champ _id dans req.body, il pourrait potentiellement essayer d'écraser ou de réutiliser l'identifiant d'un autre document.
+  delete bookObject._userId; // Cote serveur / Un utilisateur malveillant pourrait essayer de créer ou de modifier un livre au nom d'un autre utilisateur en falsifiant cet identifiant dans la requête.
   const book = new Book({
     ...bookObject,
     userId: req.auth.userId,
@@ -32,14 +32,21 @@ exports.modifyBook = (req, res, next) => {
     .then((book) => {
       if (book.userId != req.auth.userId) {
         res.status(401).json({ message: "Not authorized" });
-      } else {
-        Book.updateOne(
-          { _id: req.params.id },
-          { ...bookObject, _id: req.params.id }
-        )
-          .then(() => res.status(200).json({ message: "Livre modifié!" }))
-          .catch((error) => res.status(401).json({ error }));
       }
+      if (req.file) {
+        const oldFilename = book.imageUrl.split("/images/")[1];
+        fs.unlink(`images/${oldFilename}`, (err) => {
+          if (err) {
+            console.error("Erreur lors de la suppression de l'image : ", err);
+          }
+        });
+      }
+      Book.updateOne(
+        { _id: req.params.id },
+        { ...bookObject, _id: req.params.id }
+      )
+        .then(() => res.status(200).json({ message: "Livre modifié!" }))
+        .catch((error) => res.status(401).json({ error }));
     })
     .catch((error) => {
       res.status(400).json({ error });
