@@ -3,8 +3,8 @@ const fs = require("fs");
 
 exports.createBook = (req, res, next) => {
   const bookObject = JSON.parse(req.body.book);
-  delete bookObject._id; // Cote MongoDB / Si un utilisateur soumettait une requête avec un champ _id dans req.body, il pourrait potentiellement essayer d'écraser ou de réutiliser l'identifiant d'un autre document.
-  delete bookObject._userId; // Cote serveur / Un utilisateur malveillant pourrait essayer de créer ou de modifier un livre au nom d'un autre utilisateur en falsifiant cet identifiant dans la requête.
+  delete bookObject._id;
+  delete bookObject._userId;
   const book = new Book({
     ...bookObject,
     userId: req.auth.userId,
