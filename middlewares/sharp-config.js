@@ -1,7 +1,6 @@
 const sharp = require("sharp");
-sharp.cache(false);
-
 const fs = require("fs");
+sharp.cache(false);
 
 const sharpImg = async (req, res, next) => {
   if (!req.file) {
@@ -10,8 +9,8 @@ const sharpImg = async (req, res, next) => {
   try {
     await sharp(req.file.path)
       .resize({
-        width: 400,
-        height: 500,
+        width: 206,
+        height: 260,
       })
       .webp({ quality: 80 })
       .toFile(`${req.file.path.split(".")[0]}optimized.webp`);
