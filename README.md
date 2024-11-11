@@ -25,18 +25,49 @@ Dans ce projet, j'ai développé le back-end d'un site de notation de livres en 
 7. **Pratiques de Green Code**  
    J'ai veillé à suivre des bonnes pratiques de développement pour réduire l'empreinte écologique du site, en optimisant les performances et en minimisant la consommation de ressources.
 
-## Démarrage du projet
-Pour exécuter le projet localement :
-1. Cloner le repository.
-2. Naviguer dans le dossier du projet.
-3. Installer les dépendances :
-   ```bash
-   npm install
+## Installation et utilisation
+
+### Cloner les repository backend et frontend 
+```bash
+git clone https://github.com/Kaazell/p3-sophie-portfolio.git 
+git clone https://github.com/OpenClassrooms-Student-Center/P7-Dev-Web-livres.git
 ```
-4. Démarrer le serveur :
+
+### Démarrer le backend
+1. Rendez-vous dans le dossier du repository :
+```bash
+cd p7-mon-vieux-grimoire
+```
+
+2. Installez les dépendances :
+```bash
+npm install 
+```
+
+3. Démarrez le serveur backend :
+```bash
+node server
+```
+
+### Démarrer le frontend
+1. Rendez-vous dans le dossier du repository :
+```bash
+cd P7-Dev-Web-livres
+```
+
+2. Installez les dépendances :
+```bash
+npm install 
+```
+
+3. Démarrez le serveur backend :
 ```bash
 npm start
 ```
+Pour tester les fonctionnalités interactives et la communication avec l'API, assurez-vous que le serveur backend est en cours d'exécution.
+
+## Aperçu
+![Capture d'écran du portfolio de Mon Vieux Grimoire](/screenshots/grimoire1.webp)
 
 ## Compétences développées
 Ce projet m'a permis de renforcer mes compétences en :
